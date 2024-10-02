@@ -1,0 +1,22 @@
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+
+-- Tỷ lệ zoom rất lớn
+local zoomMultiplier = 5
+local minZoomDistance = 0.5
+local maxZoomDistance = math.huge -- Đặt max zoom distance là vô hạn
+
+-- Điều chỉnh khoảng cách zoom của người chơi
+player.CameraMinZoomDistance = minZoomDistance
+player.CameraMaxZoomDistance = maxZoomDistance
+
+-- Khi nút lăn chuột được sử dụng
+mouse.WheelForward:Connect(function()
+    -- Giảm khoảng cách zoom khi lăn chuột về phía trước (thu nhỏ)
+    player.CameraMinZoomDistance = math.max(minZoomDistance, player.CameraMinZoomDistance / zoomMultiplier)
+end)
+
+mouse.WheelBackward:Connect(function()
+    -- Tăng khoảng cách zoom khi lăn chuột về phía sau (phóng to)
+    player.CameraMaxZoomDistance = math.min(math.huge, player.CameraMaxZoomDistance * zoomMultiplier)
+end)
